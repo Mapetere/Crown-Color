@@ -7,40 +7,35 @@
 // Mock Data
 // ============================================
 const hairstyles = [
-    // Box Braids
+    // Box Braids (3 unique images)
     { id: 1, name: "Classic Box Braids", category: "box-braids", image: "assets/styles/box-braids-1.jpg", trending: true, length: "long" },
-    { id: 6, name: "Jumbo Box Braids", category: "box-braids", image: "assets/styles/box-braids-2.jpg", trending: true, length: "long" },
-    { id: 11, name: "Bantu Knots", category: "box-braids", image: "assets/styles/box-braids-3.jpg", trending: true, length: "short" },
-    { id: 16, name: "Bob Box Braids", category: "box-braids", image: "assets/styles/box-braids-1.jpg", trending: true, length: "short" },
-    { id: 17, name: "Goddess Box Braids", category: "box-braids", image: "assets/styles/box-braids-2.jpg", trending: true, length: "long", boho: true },
+    { id: 2, name: "Jumbo Box Braids", category: "box-braids", image: "assets/styles/box-braids-2.jpg", trending: true, length: "long" },
+    { id: 3, name: "Bantu Knots", category: "box-braids", image: "assets/styles/box-braids-3.jpg", trending: true, length: "short" },
 
-    // Locs
-    { id: 2, name: "Butterfly Locs", category: "locs", image: "assets/styles/locs-1.jpg", trending: true, length: "medium" },
-    { id: 8, name: "Goddess Locs", category: "locs", image: "assets/styles/locs-2.jpg", trending: true, length: "long", boho: true },
-    { id: 12, name: "Halo Braid Crown", category: "locs", image: "assets/styles/locs-3.jpg", trending: true, length: "short" },
-    { id: 18, name: "Faux Locs", category: "locs", image: "assets/styles/locs-1.jpg", trending: true, length: "long" },
-    { id: 19, name: "Soft Locs", category: "locs", image: "assets/styles/locs-2.jpg", trending: true, length: "medium" },
+    // Locs (5 unique images)
+    { id: 4, name: "Butterfly Locs", category: "locs", image: "assets/styles/locs-1.jpg", trending: true, length: "medium" },
+    { id: 5, name: "Goddess Locs", category: "locs", image: "assets/styles/locs-2.jpg", trending: true, length: "long", boho: true },
+    { id: 6, name: "Halo Braid Crown", category: "locs", image: "assets/styles/locs-3.jpg", trending: true, length: "short" },
+    { id: 7, name: "Faux Locs", category: "locs", image: "assets/styles/locs-4.jpg", trending: true, length: "long" },
+    { id: 8, name: "Soft Locs", category: "locs", image: "assets/styles/locs-5.jpg", trending: true, length: "medium" },
 
-    // Knotless
-    { id: 3, name: "Boho Knotless", category: "knotless", image: "assets/styles/knotless-1.jpg", trending: true, length: "long", boho: true },
+    // Knotless (3 unique images)
+    { id: 9, name: "Boho Knotless", category: "knotless", image: "assets/styles/knotless-1.jpg", trending: true, length: "long", boho: true },
     { id: 10, name: "Knotless with Curls", category: "knotless", image: "assets/styles/knotless-2.jpg", trending: true, length: "long" },
-    { id: 15, name: "Curly Knotless Bob", category: "knotless", image: "assets/styles/knotless-3.jpg", trending: true, length: "short" },
-    { id: 20, name: "Boho Knotless Bob", category: "knotless", image: "assets/styles/knotless-3.jpg", trending: true, length: "short", boho: true },
-    { id: 21, name: "Goddess Knotless", category: "knotless", image: "assets/styles/knotless-2.jpg", trending: true, length: "long", boho: true },
+    { id: 11, name: "Curly Knotless Bob", category: "knotless", image: "assets/styles/knotless-3.jpg", trending: true, length: "short" },
 
-    // Cornrows
-    { id: 4, name: "Geometric Cornrows", category: "cornrows", image: "assets/styles/cornrows-1.jpg", trending: true, length: "short" },
-    { id: 7, name: "Fulani Braids", category: "cornrows", image: "assets/styles/cornrows-2.jpg", trending: true, length: "medium" },
-    { id: 13, name: "Cornrow Updo", category: "cornrows", image: "assets/styles/cornrows-3.jpg", trending: true, length: "short" },
-    { id: 14, name: "Cornrow Ponytail", category: "cornrows", image: "assets/styles/cornrows-4.jpg", trending: true, length: "long" },
-    { id: 22, name: "Stitch Braids", category: "cornrows", image: "assets/styles/cornrows-1.jpg", trending: true, length: "short" },
-    { id: 23, name: "Lemonade Braids", category: "cornrows", image: "assets/styles/cornrows-2.jpg", trending: true, length: "long" },
+    // Cornrows (4 unique images)
+    { id: 12, name: "Geometric Cornrows", category: "cornrows", image: "assets/styles/cornrows-1.jpg", trending: true, length: "short" },
+    { id: 13, name: "Fulani Braids", category: "cornrows", image: "assets/styles/cornrows-2.jpg", trending: true, length: "medium" },
+    { id: 14, name: "Cornrow Updo", category: "cornrows", image: "assets/styles/cornrows-3.jpg", trending: true, length: "short" },
+    { id: 15, name: "Cornrow Ponytail", category: "cornrows", image: "assets/styles/cornrows-4.jpg", trending: true, length: "long" },
 
-    // Twists
-    { id: 5, name: "Passion Twists", category: "twists", image: "assets/styles/twists-1.jpg", trending: true, length: "medium" },
-    { id: 9, name: "Senegalese Twists", category: "twists", image: "assets/styles/twists-2.jpg", trending: false, length: "long" },
-    { id: 24, name: "Marley Twists", category: "twists", image: "assets/styles/twists-1.jpg", trending: true, length: "long" },
-    { id: 25, name: "Spring Twists", category: "twists", image: "assets/styles/twists-2.jpg", trending: true, length: "short" },
+    // Twists (2 unique images)
+    { id: 16, name: "Passion Twists", category: "twists", image: "assets/styles/twists-1.jpg", trending: true, length: "medium" },
+    { id: 17, name: "Spring Twists", category: "twists", image: "assets/styles/twists-2.jpg", trending: true, length: "short" },
+
+    // Natural (1 unique image)
+    { id: 18, name: "Natural Afro", category: "natural", image: "assets/styles/natural-1.jpg", trending: true, length: "medium" },
 ];
 
 const colorRecommendations = {
@@ -115,9 +110,9 @@ const hairdressers = [
         reviews: 127,
         location: "Johannesburg, SA",
         avatar: "assets/hairdressers/hairdresser-1.jpg",
-        whatsapp: "+27123456789",
-        email: "amara.braids@email.com",
-        preferredContact: "whatsapp", // 'whatsapp' or 'email'
+        whatsapp: "+263774694160",
+        email: "mapeterenyasha@gmail.com",
+        preferredContact: "whatsapp", // Test with your contact
     },
     {
         id: 2,
