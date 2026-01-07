@@ -21,6 +21,7 @@ const hairstyles = [
     { id: 12, name: "Halo Braid Crown", category: "locs", image: "assets/styles/locs-3.jpg", trending: true },
     { id: 13, name: "Cornrow Updo", category: "cornrows", image: "assets/styles/cornrows-3.jpg", trending: true },
     { id: 14, name: "Cornrow Ponytail", category: "cornrows", image: "assets/styles/cornrows-4.jpg", trending: true },
+    { id: 15, name: "Curly Knotless Bob", category: "knotless", image: "assets/styles/knotless-3.jpg", trending: true },
 ];
 
 const colorRecommendations = {
