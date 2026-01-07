@@ -1190,6 +1190,82 @@ section {
     border-color: transparent;
 }
 
+/* Contact Buttons */
+.contact-buttons {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.contact-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-lg);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--transition-base);
+    position: relative;
+}
+
+.whatsapp-btn {
+    background: rgba(37, 211, 102, 0.15);
+    color: #25D366;
+    border: 1px solid rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-btn:hover {
+    background: #25D366;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+}
+
+.email-btn {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-medium);
+}
+
+.email-btn:hover {
+    background: var(--gradient-gold);
+    color: var(--neutral-900);
+    border-color: transparent;
+    transform: translateY(-2px);
+}
+
+.contact-btn.recommended {
+    border-width: 2px;
+}
+
+.whatsapp-btn.recommended {
+    border-color: #25D366;
+    box-shadow: 0 0 10px rgba(37, 211, 102, 0.2);
+}
+
+.email-btn.recommended {
+    border-color: var(--gold-400);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+.recommended-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--gradient-gold);
+    color: var(--neutral-900);
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    animation: pulse 2s ease-in-out infinite;
+}
+
 /* ============================================
    Footer
    ============================================ */

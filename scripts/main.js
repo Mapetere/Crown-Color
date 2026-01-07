@@ -7,21 +7,40 @@
 // Mock Data
 // ============================================
 const hairstyles = [
-    { id: 1, name: "Classic Box Braids", category: "box-braids", image: "assets/styles/box-braids-1.jpg", trending: true },
-    { id: 2, name: "Butterfly Locs", category: "locs", image: "assets/styles/locs-1.jpg", trending: true },
-    { id: 3, name: "Boho Knotless", category: "knotless", image: "assets/styles/knotless-1.jpg", trending: true },
-    { id: 4, name: "Geometric Cornrows", category: "cornrows", image: "assets/styles/cornrows-1.jpg", trending: true },
-    { id: 5, name: "Passion Twists", category: "twists", image: "assets/styles/twists-1.jpg", trending: true },
-    { id: 6, name: "Jumbo Box Braids", category: "box-braids", image: "assets/styles/box-braids-2.jpg", trending: true },
-    { id: 7, name: "Fulani Braids", category: "cornrows", image: "assets/styles/cornrows-2.jpg", trending: true },
-    { id: 8, name: "Goddess Locs", category: "locs", image: "assets/styles/locs-2.jpg", trending: true },
-    { id: 9, name: "Senegalese Twists", category: "twists", image: "assets/styles/twists-2.jpg", trending: false },
-    { id: 10, name: "Knotless with Curls", category: "knotless", image: "assets/styles/knotless-2.jpg", trending: true },
-    { id: 11, name: "Bantu Knots", category: "box-braids", image: "assets/styles/box-braids-3.jpg", trending: true },
-    { id: 12, name: "Halo Braid Crown", category: "locs", image: "assets/styles/locs-3.jpg", trending: true },
-    { id: 13, name: "Cornrow Updo", category: "cornrows", image: "assets/styles/cornrows-3.jpg", trending: true },
-    { id: 14, name: "Cornrow Ponytail", category: "cornrows", image: "assets/styles/cornrows-4.jpg", trending: true },
-    { id: 15, name: "Curly Knotless Bob", category: "knotless", image: "assets/styles/knotless-3.jpg", trending: true },
+    // Box Braids
+    { id: 1, name: "Classic Box Braids", category: "box-braids", image: "assets/styles/box-braids-1.jpg", trending: true, length: "long" },
+    { id: 6, name: "Jumbo Box Braids", category: "box-braids", image: "assets/styles/box-braids-2.jpg", trending: true, length: "long" },
+    { id: 11, name: "Bantu Knots", category: "box-braids", image: "assets/styles/box-braids-3.jpg", trending: true, length: "short" },
+    { id: 16, name: "Bob Box Braids", category: "box-braids", image: "assets/styles/box-braids-1.jpg", trending: true, length: "short" },
+    { id: 17, name: "Goddess Box Braids", category: "box-braids", image: "assets/styles/box-braids-2.jpg", trending: true, length: "long", boho: true },
+
+    // Locs
+    { id: 2, name: "Butterfly Locs", category: "locs", image: "assets/styles/locs-1.jpg", trending: true, length: "medium" },
+    { id: 8, name: "Goddess Locs", category: "locs", image: "assets/styles/locs-2.jpg", trending: true, length: "long", boho: true },
+    { id: 12, name: "Halo Braid Crown", category: "locs", image: "assets/styles/locs-3.jpg", trending: true, length: "short" },
+    { id: 18, name: "Faux Locs", category: "locs", image: "assets/styles/locs-1.jpg", trending: true, length: "long" },
+    { id: 19, name: "Soft Locs", category: "locs", image: "assets/styles/locs-2.jpg", trending: true, length: "medium" },
+
+    // Knotless
+    { id: 3, name: "Boho Knotless", category: "knotless", image: "assets/styles/knotless-1.jpg", trending: true, length: "long", boho: true },
+    { id: 10, name: "Knotless with Curls", category: "knotless", image: "assets/styles/knotless-2.jpg", trending: true, length: "long" },
+    { id: 15, name: "Curly Knotless Bob", category: "knotless", image: "assets/styles/knotless-3.jpg", trending: true, length: "short" },
+    { id: 20, name: "Boho Knotless Bob", category: "knotless", image: "assets/styles/knotless-3.jpg", trending: true, length: "short", boho: true },
+    { id: 21, name: "Goddess Knotless", category: "knotless", image: "assets/styles/knotless-2.jpg", trending: true, length: "long", boho: true },
+
+    // Cornrows
+    { id: 4, name: "Geometric Cornrows", category: "cornrows", image: "assets/styles/cornrows-1.jpg", trending: true, length: "short" },
+    { id: 7, name: "Fulani Braids", category: "cornrows", image: "assets/styles/cornrows-2.jpg", trending: true, length: "medium" },
+    { id: 13, name: "Cornrow Updo", category: "cornrows", image: "assets/styles/cornrows-3.jpg", trending: true, length: "short" },
+    { id: 14, name: "Cornrow Ponytail", category: "cornrows", image: "assets/styles/cornrows-4.jpg", trending: true, length: "long" },
+    { id: 22, name: "Stitch Braids", category: "cornrows", image: "assets/styles/cornrows-1.jpg", trending: true, length: "short" },
+    { id: 23, name: "Lemonade Braids", category: "cornrows", image: "assets/styles/cornrows-2.jpg", trending: true, length: "long" },
+
+    // Twists
+    { id: 5, name: "Passion Twists", category: "twists", image: "assets/styles/twists-1.jpg", trending: true, length: "medium" },
+    { id: 9, name: "Senegalese Twists", category: "twists", image: "assets/styles/twists-2.jpg", trending: false, length: "long" },
+    { id: 24, name: "Marley Twists", category: "twists", image: "assets/styles/twists-1.jpg", trending: true, length: "long" },
+    { id: 25, name: "Spring Twists", category: "twists", image: "assets/styles/twists-2.jpg", trending: true, length: "short" },
 ];
 
 const colorRecommendations = {
@@ -96,6 +115,9 @@ const hairdressers = [
         reviews: 127,
         location: "Johannesburg, SA",
         avatar: "assets/hairdressers/hairdresser-1.jpg",
+        whatsapp: "+27123456789",
+        email: "amara.braids@email.com",
+        preferredContact: "whatsapp", // 'whatsapp' or 'email'
     },
     {
         id: 2,
@@ -105,6 +127,9 @@ const hairdressers = [
         reviews: 89,
         location: "Cape Town, SA",
         avatar: "assets/hairdressers/hairdresser-2.jpg",
+        whatsapp: "+27987654321",
+        email: "thandi.styles@email.com",
+        preferredContact: "email",
     },
     {
         id: 3,
@@ -114,6 +139,9 @@ const hairdressers = [
         reviews: 203,
         location: "Lagos, Nigeria",
         avatar: "assets/hairdressers/hairdresser-3.jpg",
+        whatsapp: "+2348012345678",
+        email: "blessing.hair@email.com",
+        preferredContact: "whatsapp",
     },
     {
         id: 4,
@@ -123,6 +151,9 @@ const hairdressers = [
         reviews: 64,
         location: "Durban, SA",
         avatar: "assets/hairdressers/hairdresser-4.jpg",
+        whatsapp: "+27765432109",
+        email: "zanele.natural@email.com",
+        preferredContact: "whatsapp",
     },
 ];
 
@@ -488,6 +519,19 @@ function renderHairdressers() {
         card.className = 'hairdresser-card animate-fade-in-up';
         card.style.animationDelay = `${index * 0.1}s`;
 
+        // Create WhatsApp link with pre-filled message
+        const whatsappMessage = encodeURIComponent(`Hi ${hairdresser.name}! I found you on Crown & Color and would like to book an appointment.`);
+        const whatsappLink = `https://wa.me/${hairdresser.whatsapp.replace(/\+/g, '')}?text=${whatsappMessage}`;
+
+        // Email link
+        const emailSubject = encodeURIComponent('Booking Inquiry from Crown & Color');
+        const emailBody = encodeURIComponent(`Hi ${hairdresser.name},\n\nI found your profile on Crown & Color and would like to book an appointment for ${hairdresser.specialty}.\n\nPlease let me know your availability.\n\nThank you!`);
+        const emailLink = `mailto:${hairdresser.email}?subject=${emailSubject}&body=${emailBody}`;
+
+        // Determine recommended badges
+        const waRecommended = hairdresser.preferredContact === 'whatsapp';
+        const emailRecommended = hairdresser.preferredContact === 'email';
+
         card.innerHTML = `
             <div class="hairdresser-header">
                 <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-400), var(--purple-400)); display: flex; align-items: center; justify-content: center; border: 2px solid var(--gold-400);">
@@ -509,7 +553,23 @@ function renderHairdressers() {
                 </svg>
                 ${hairdresser.location}
             </div>
-            <button class="book-btn">Book Appointment</button>
+            <div class="contact-buttons">
+                <a href="${whatsappLink}" target="_blank" class="contact-btn whatsapp-btn ${waRecommended ? 'recommended' : ''}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    <span>WhatsApp</span>
+                    ${waRecommended ? '<span class="recommended-badge">Recommended</span>' : ''}
+                </a>
+                <a href="${emailLink}" class="contact-btn email-btn ${emailRecommended ? 'recommended' : ''}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    <span>Email</span>
+                    ${emailRecommended ? '<span class="recommended-badge">Recommended</span>' : ''}
+                </a>
+            </div>
         `;
 
         hairdresserGrid.appendChild(card);
