@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Crown & Color - Visualize hairstyles and braid colors before application. AI-powered try-ons and personalized recommendations.">
+    <title>Crown & Color | Virtual Hairstyle Try-On</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-text">Crown & Color</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#try-on">Try On</a></li>
+                <li><a href="#colors">Colors</a></li>
+                <li><a href="#hairdressers">Find Stylist</a></li>
+            </ul>
+            <button class="nav-cta">Get Started</button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="menu-overlay" id="menu-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-links">
+            <a href="#gallery">Gallery</a>
+            <a href="#try-on">Try On</a>
+            <a href="#colors">Colors</a>
+            <a href="#hairdressers">Find Stylist</a>
+        </div>
+        <a href="#try-on" class="mobile-menu-cta">Get Started</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-line">Discover Your</span>
+                <span class="title-line accent">Perfect Style</span>
+            </h1>
+            <p class="hero-subtitle">
+                Visualize stunning hairstyles and braid colors before your next appointment.
+                AI-powered try-ons that match your unique beauty.
+            </p>
+            <div class="hero-buttons">
+                <a href="#try-on" class="btn btn-primary">
+                    <span>Try Your Look</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="#gallery" class="btn btn-secondary">Browse Gallery</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Hairstyles</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">200+</span>
+                    <span class="stat-label">Braid Colors</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Partner Stylists</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-image-container">
+                <div class="hero-glow"></div>
+                <div class="hero-image-frame">
+                    <img src="assets/hero-model.jpg" alt="Beautiful braided hairstyle" class="hero-image"
+                        id="hero-image">
+                </div>
+                <div class="floating-card card-1">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z" />
+                    </svg>
+                    <span>AI-Powered</span>
+                </div>
+                <div class="floating-card card-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="13.5" cy="6.5" r="2.5" />
+                        <circle cx="17.5" cy="10.5" r="2.5" />
+                        <circle cx="8.5" cy="7.5" r="2.5" />
+                        <circle cx="6.5" cy="12.5" r="2.5" />
+                        <path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10z" />
+                    </svg>
+                    <span>Color Match</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hairstyle Gallery Section -->
+    <section class="gallery-section" id="gallery">
+        <div class="section-header">
+            <span class="section-tag">Explore</span>
+            <h2 class="section-title">Trending Hairstyles</h2>
+            <p class="section-subtitle">Discover the latest braid styles that are turning heads</p>
+        </div>
+
+        <div class="gallery-filters">
+            <button class="filter-btn active" data-filter="all">All Styles</button>
+            <button class="filter-btn" data-filter="box-braids">Box Braids</button>
+            <button class="filter-btn" data-filter="cornrows">Cornrows</button>
+            <button class="filter-btn" data-filter="twists">Twists</button>
+            <button class="filter-btn" data-filter="locs">Locs</button>
+            <button class="filter-btn" data-filter="knotless">Knotless</button>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+            <!-- Gallery items will be populated by JavaScript -->
+        </div>
+
+        <button class="load-more-btn" id="load-more">
+            Load More Styles
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12h14" />
+            </svg>
+        </button>
+    </section>
+
+    <!-- Color Picker Section -->
+    <section class="color-section" id="colors">
+        <div class="section-header">
+            <span class="section-tag">Personalize</span>
+            <h2 class="section-title">Find Your Perfect Color</h2>
+            <p class="section-subtitle">Match braid colors to your skin tone and personal style</p>
+        </div>
+
+        <div class="color-picker-container">
+            <div class="skin-tone-selector">
+                <h3>Select Your Skin Tone</h3>
+                <div class="skin-tones" id="skin-tones">
+                    <button class="skin-tone" data-tone="fair" style="background: #f5d6c6;" title="Fair"></button>
+                    <button class="skin-tone" data-tone="light" style="background: #e8c4a8;" title="Light"></button>
+                    <button class="skin-tone" data-tone="medium" style="background: #d4a574;" title="Medium"></button>
+                    <button class="skin-tone" data-tone="tan" style="background: #c68642;" title="Tan"></button>
+                    <button class="skin-tone" data-tone="brown" style="background: #8d5524;" title="Brown"></button>
+                    <button class="skin-tone" data-tone="dark" style="background: #5a3825;" title="Dark"></button>
+                </div>
+            </div>
+
+            <div class="color-recommendations" id="color-recommendations">
+                <h3>Recommended Colors for You</h3>
+                <div class="color-palette" id="color-palette">
+                    <!-- Colors will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="color-preview">
+                <h3>Preview Your Look</h3>
+                <div class="preview-card" id="preview-card">
+                    <div class="preview-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 19V5M5 12l7-7 7 7" />
+                        </svg>
+                        <p>Select a skin tone to see recommendations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Virtual Try-On Section -->
+    <section class="try-on-section" id="try-on">
+        <div class="section-header">
+            <span class="section-tag">AI Magic</span>
+            <h2 class="section-title">Virtual Try-On</h2>
+            <p class="section-subtitle">Upload your photo and see how styles look on you</p>
+        </div>
+
+        <div class="try-on-container">
+            <div class="upload-area" id="upload-area">
+                <div class="upload-content">
+                    <div class="upload-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17,8 12,3 7,8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                        </svg>
+                    </div>
+                    <h3>Upload Your Photo</h3>
+                    <p>Drag & drop or click to upload</p>
+                    <span class="upload-hint">PNG, JPG up to 10MB</span>
+                </div>
+                <input type="file" id="photo-upload" accept="image/*" hidden>
+            </div>
+
+            <div class="style-selector" id="style-selector">
+                <h3>Choose a Style</h3>
+                <div class="style-options" id="style-options">
+                    <!-- Style options populated by JS -->
+                </div>
+            </div>
+
+            <div class="result-preview" id="result-preview">
+                <div class="result-placeholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path
+                            d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z" />
+                    </svg>
+                    <p>Your transformed look will appear here</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="try-on-actions">
+            <button class="btn btn-primary" id="generate-btn" disabled>
+                <span>Generate Look</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+            </button>
+            <button class="btn btn-secondary" id="reset-btn">Reset</button>
+        </div>
+    </section>
+
+    <!-- Find Hairdresser Section -->
+    <section class="hairdresser-section" id="hairdressers">
+        <div class="section-header">
+            <span class="section-tag">Connect</span>
+            <h2 class="section-title">Find Your Stylist</h2>
+            <p class="section-subtitle">Connect with talented hairdressers near you</p>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Enter your location..." id="location-search">
+            <button class="search-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="hairdresser-grid" id="hairdresser-grid">
+            <!-- Hairdresser cards populated by JS -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <span class="logo-text">Crown & Color</span>
+                </a>
+                <p>Empowering you to visualize your perfect hairstyle before commitment.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#try-on">Virtual Try-On</a></li>
+                        <li><a href="#colors">Color Picker</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>For Business</h4>
+                    <ul>
+                        <li><a href="#">Partner With Us</a></li>
+                        <li><a href="#">For Salons</a></li>
+                        <li><a href="#">Hair Providers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Crown & Color. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+
+</html>
