@@ -1,11 +1,3 @@
-/**
- * Crown & Color - Main JavaScript
- * Premium Hairstyle & Braid Color Platform
- */
-
-// ============================================
-// Mock Data
-// ============================================
 const hairstyles = [
     // Box Braids (3 unique images)
     { id: 1, name: "Classic Box Braids", category: "box-braids", image: "assets/styles/box-braids-1.jpg", trending: true, length: "long" },
@@ -19,8 +11,9 @@ const hairstyles = [
     { id: 7, name: "Faux Locs", category: "locs", image: "assets/styles/locs-4.jpg", trending: true, length: "long" },
     { id: 8, name: "Soft Locs", category: "locs", image: "assets/styles/locs-5.jpg", trending: true, length: "medium" },
 
-    // Knotless (3 unique images)
-    { id: 9, name: "Boho Knotless", category: "knotless", image: "assets/styles/knotless-1.jpg", trending: true, length: "long", boho: true },
+    // Knotless (4 items)
+    { id: 9, name: "Classic Knotless", category: "knotless", image: "assets/styles/knotless-1.jpg", trending: true, length: "long" },
+    { id: 20, name: "Boho Knotless", category: "knotless", image: "assets/styles/boho-knotless-1.jpg", trending: true, length: "long", boho: true },
     { id: 10, name: "Knotless with Curls", category: "knotless", image: "assets/styles/knotless-2.jpg", trending: true, length: "long" },
     { id: 11, name: "Curly Knotless Bob", category: "knotless", image: "assets/styles/knotless-3.jpg", trending: true, length: "short" },
 
@@ -30,9 +23,10 @@ const hairstyles = [
     { id: 14, name: "Cornrow Updo", category: "cornrows", image: "assets/styles/cornrows-3.jpg", trending: true, length: "short" },
     { id: 15, name: "Cornrow Ponytail", category: "cornrows", image: "assets/styles/cornrows-4.jpg", trending: true, length: "long" },
 
-    // Twists (2 unique images)
+    // Twists (3 unique images)
     { id: 16, name: "Passion Twists", category: "twists", image: "assets/styles/twists-1.jpg", trending: true, length: "medium" },
     { id: 17, name: "Spring Twists", category: "twists", image: "assets/styles/twists-2.jpg", trending: true, length: "short" },
+    { id: 19, name: "Marley Twists", category: "twists", image: "assets/styles/twists-3.jpg", trending: true, length: "long" },
 
     // Natural (1 unique image)
     { id: 18, name: "Natural Afro", category: "natural", image: "assets/styles/natural-1.jpg", trending: true, length: "medium" },
@@ -169,6 +163,12 @@ const resetBtn = document.getElementById('reset-btn');
 const resultPreview = document.getElementById('result-preview');
 const hairdresserGrid = document.getElementById('hairdresser-grid');
 
+// AI Integration
+const aiApiKey = localStorage.getItem('gemini_api_key') || 'YOUR_GEMINI_API_KEY';
+const crownAIInstance = typeof CrownColorAI !== 'undefined' ? new CrownColorAI(aiApiKey) : null;
+const aiAnalysisResult = document.getElementById('ai-analysis-result');
+const aiFindings = document.getElementById('ai-findings');
+
 // ============================================
 // State
 // ============================================
@@ -246,18 +246,21 @@ function createGalleryItem(style) {
     return item;
 }
 
-function renderGallery(filter = 'all') {
-    galleryGrid.innerHTML = '';
-
+function renderGallery(filter = 'all', isAppend = false) {
     const filteredStyles = filter === 'all'
         ? hairstyles
         : hairstyles.filter(s => s.category === filter);
 
-    const stylesToShow = filteredStyles.slice(0, displayedItems);
+    const prevCount = isAppend ? galleryGrid.children.length : 0;
+    if (!isAppend) galleryGrid.innerHTML = '';
+
+    const stylesToShow = filteredStyles.slice(prevCount, displayedItems);
 
     stylesToShow.forEach((style, index) => {
         const item = createGalleryItem(style);
-        item.style.animationDelay = `${index * 0.1}s`;
+        // Use global index for animation delay to maintain continuity
+        const globalIndex = prevCount + index;
+        item.style.animationDelay = `${globalIndex * 0.1}s`;
         galleryGrid.appendChild(item);
     });
 
@@ -279,71 +282,11 @@ filterBtns.forEach(btn => {
 // Load more button
 loadMoreBtn.addEventListener('click', () => {
     displayedItems += 6;
-    renderGallery(currentFilter);
+    renderGallery(currentFilter, true);
 });
 
-// ============================================
-// Color Picker Functions
-// ============================================
-function renderColorPalette(tone) {
-    const colors = colorRecommendations[tone] || [];
-    colorPalette.innerHTML = '';
-
-    colors.forEach((color, index) => {
-        const swatch = document.createElement('button');
-        swatch.className = 'color-swatch animate-scale-in';
-        swatch.style.background = color.hex;
-        swatch.style.animationDelay = `${index * 0.05}s`;
-        swatch.title = color.name;
-
-        swatch.innerHTML = `<span class="color-swatch-name">${color.name}</span>`;
-
-        swatch.addEventListener('click', () => {
-            document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
-            swatch.classList.add('selected');
-            selectedColor = color;
-            updateColorPreview();
-        });
-
-        colorPalette.appendChild(swatch);
-    });
-}
-
-function updateColorPreview() {
-    const previewCard = document.getElementById('preview-card');
-
-    if (selectedSkinTone && selectedColor) {
-        const skinColors = {
-            fair: '#f5d6c6',
-            light: '#e8c4a8',
-            medium: '#d4a574',
-            tan: '#c68642',
-            brown: '#8d5524',
-            dark: '#5a3825'
-        };
-
-        previewCard.innerHTML = `
-            <div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
-                <div style="width: 80px; height: 80px; border-radius: 50%; background: ${skinColors[selectedSkinTone]}; border: 3px solid ${selectedColor.hex};"></div>
-                <div style="width: 60%; height: 40px; background: ${selectedColor.hex}; border-radius: 8px;"></div>
-                <div style="text-align: center;">
-                    <p style="color: var(--text-primary); font-weight: 600;">${selectedColor.name}</p>
-                    <p style="color: var(--text-muted); font-size: 0.75rem;">Great match for your skin tone!</p>
-                </div>
-            </div>
-        `;
-    }
-}
-
-// Skin tone selection
-skinTones.forEach(tone => {
-    tone.addEventListener('click', () => {
-        skinTones.forEach(t => t.classList.remove('selected'));
-        tone.classList.add('selected');
-        selectedSkinTone = tone.dataset.tone;
-        renderColorPalette(selectedSkinTone);
-    });
-});
+// Color picker logic removed as it was replaced by Maintenance section
+// No additional logic needed here as navigation is handled via anchor links
 
 // ============================================
 // Try-On Functions
@@ -431,14 +374,40 @@ photoUpload.addEventListener('change', (e) => {
 
 function handleImageUpload(file) {
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
         uploadedImage = e.target.result;
         uploadArea.classList.add('has-image');
         uploadArea.innerHTML = `<img src="${uploadedImage}" alt="Your photo">`;
         updateGenerateButton();
+
+        // Trigger AI Analysis
+        if (crownAIInstance && aiApiKey !== 'YOUR_GEMINI_API_KEY') {
+            aiAnalysisResult.style.display = 'block';
+            aiFindings.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; gap: 8px;"><div class="loading-dots"></div> AI is analyzing your facial features...</div>';
+
+            try {
+                const base64Image = uploadedImage.split(',')[1];
+                const analysis = await crownAIInstance.detectFaceShape(base64Image);
+
+                if (analysis) {
+                    const styles = crownAIInstance.getStylesForFaceShape(analysis.faceShape);
+                    aiFindings.innerHTML = `
+                        <p style="margin-bottom: 0.5rem;">Detected <strong>${analysis.faceShape}</strong> face shape with <strong>${analysis.skinTone}</strong> skin tone.</p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                            Recommended: ${styles.join(', ')}
+                        </p>
+                    `;
+                }
+            } catch (error) {
+                console.error('AI analysis failed:', error);
+                aiAnalysisResult.style.display = 'none';
+            }
+        }
     };
     reader.readAsDataURL(file);
 }
+
+// Generate button handled below
 
 // Generate button
 generateBtn.addEventListener('click', () => {
@@ -455,13 +424,17 @@ generateBtn.addEventListener('click', () => {
     // Simulate AI processing
     setTimeout(() => {
         resultPreview.classList.add('has-result');
+        const feedback = crownAIInstance && aiApiKey !== 'YOUR_GEMINI_API_KEY'
+            ? `Our AI confirms this style perfectly balances your ${document.getElementById('ai-findings').innerText.split(' ')[1] || 'features'}!`
+            : "This style would look amazing on you!";
+
         resultPreview.innerHTML = `
             <div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(168, 85, 247, 0.1)); padding: 2rem;">
                 <img src="${uploadedImage}" alt="Your transformed look" style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%; border: 4px solid var(--gold-400);">
                 <h3 style="margin-top: 1.5rem; color: var(--text-primary);">${selectedStyle.name}</h3>
                 <p style="color: var(--gold-400); margin-top: 0.5rem;">Great choice!</p>
                 <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem; text-align: center;">
-                    This style would look amazing on you!<br>
+                    ${feedback}<br>
                     Find a hairdresser below to make it happen.
                 </p>
             </div>
@@ -475,6 +448,8 @@ resetBtn.addEventListener('click', () => {
     selectedStyle = null;
 
     uploadArea.classList.remove('has-image');
+    if (aiAnalysisResult) aiAnalysisResult.style.display = 'none';
+    if (aiFindings) aiFindings.innerHTML = '';
     uploadArea.innerHTML = `
         <div class="upload-content">
             <div class="upload-icon">

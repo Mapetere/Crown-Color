@@ -1,0 +1,22 @@
+{
+    "name": "crown-color",
+    "version": "1.0.0",
+    "description": "Crown & Color - AI-Powered Hairstyle Visualization Platform",
+    "main": "index.html",
+    "scripts": {
+        "start": "npx serve -s . -l ${PORT:-3000}",
+        "dev": "npx serve -s . -l 3000"
+    },
+    "keywords": [
+        "hairstyles",
+        "braids",
+        "locs",
+        "visualization",
+        "ai"
+    ],
+    "author": "Crown & Color",
+    "license": "MIT",
+    "dependencies": {
+        "serve": "^14.2.0"
+    }
+}

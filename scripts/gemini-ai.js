@@ -106,6 +106,80 @@ Give specific style names and brief reasons why each would work.`;
         return await this.sendMessage(prompt);
     }
 
+    // Face Shape Detection using Gemini Vision
+    async detectFaceShape(imageBase64) {
+        const visionUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent';
+
+        const requestBody = {
+            contents: [{
+                parts: [
+                    {
+                        text: `Analyze this face photo and determine the face shape. 
+                    Options: Oval, Round, Square, Heart, Oblong, Diamond.
+                    Also note the skin tone category: Fair, Light, Medium, Olive, Brown, Dark.
+                    
+                    Respond in JSON format only:
+                    {"faceShape": "...", "skinTone": "...", "recommendations": ["style1", "style2", "style3"]}` },
+                    { inline_data: { mime_type: 'image/jpeg', data: imageBase64 } }
+                ]
+            }],
+            generationConfig: {
+                temperature: 0.3,
+                maxOutputTokens: 200,
+            }
+        };
+
+        try {
+            const response = await fetch(`${visionUrl}?key=${this.apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) throw new Error('Vision API failed');
+
+            const data = await response.json();
+            const text = data.candidates[0].content.parts[0].text;
+
+            // Parse JSON from response
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+                return JSON.parse(jsonMatch[0]);
+            }
+            return this.getFallbackFaceAnalysis();
+        } catch (error) {
+            console.error('Face detection error:', error);
+            return this.getFallbackFaceAnalysis();
+        }
+    }
+
+    getFallbackFaceAnalysis() {
+        // Fallback recommendations when API unavailable
+        return {
+            faceShape: 'Oval',
+            skinTone: 'Medium',
+            recommendations: [
+                'Knotless Braids - versatile for any face shape',
+                'Butterfly Locs - soft and flattering',
+                'Fulani Braids - adds cultural elegance'
+            ],
+            note: 'Based on general recommendations. Upload a clear selfie for personalized analysis!'
+        };
+    }
+
+    // Get style recommendations based on face analysis
+    getStylesForFaceShape(faceShape) {
+        const styleMap = {
+            'Oval': ['Any style works! Try box braids, locs, or cornrows', 'Boho Knotless', 'Goddess Locs', 'Fulani Braids'],
+            'Round': ['Add height and length! Try high ponytails, long braids', 'Cornrow Ponytail', 'Long Box Braids', 'Lemonade Braids'],
+            'Square': ['Soften angles with wavy styles', 'Goddess Locs', 'Boho Knotless with Curls', 'Soft Locs'],
+            'Heart': ['Balance with chin-length or longer styles', 'Bob Box Braids', 'Curly Knotless Bob', 'Passion Twists'],
+            'Oblong': ['Add width with volume at sides', 'Natural Afro', 'Bantu Knots', 'Spring Twists'],
+            'Diamond': ['Highlight cheekbones, add width at forehead', 'Side-Swept Braids', 'Fulani Braids', 'Cornrow Updo']
+        };
+        return styleMap[faceShape] || styleMap['Oval'];
+    }
+
     clearHistory() {
         this.chatHistory = [];
     }
