@@ -12,14 +12,88 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo-favicon.png">
+    <link rel="apple-touch-icon" href="assets/logo-favicon.png">
     <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
+    <!-- User Onboarding Modal -->
+    <div id="onboarding-modal" class="modal-overlay">
+        <div class="onboarding-card">
+            <div class="onboarding-logo">
+                <img src="assets/logo.png" alt="Crown & Color" style="height: 60px; width: auto;">
+            </div>
+            <h2>Your Crowning Moment</h2>
+            <p>Welcome, Beautiful. Tell us, what brings you to Crown & Color today?</p>
+
+            <div class="persona-options">
+                <button class="persona-btn" data-role="client">
+                    <div class="persona-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </div>
+                    <div class="persona-info">
+                        <h3>I'm a Client</h3>
+                        <p>Visualize styles & find expert stylists near me</p>
+                    </div>
+                </button>
+                <button class="persona-btn" data-role="stylist">
+                    <div class="persona-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z" />
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+                            <path d="M2 2l7.5 1.5" />
+                            <path d="M7 11l-3 3" />
+                        </svg>
+                    </div>
+                    <div class="persona-info">
+                        <h3>I'm a Stylist</h3>
+                        <p>Showcase my portfolio & connect with new clients</p>
+                    </div>
+                </button>
+                <button class="persona-btn" data-role="provider">
+                    <div class="persona-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                            <path d="m3.3 7 8.7 5 8.7-5" />
+                            <path d="M12 22V12" />
+                        </svg>
+                    </div>
+                    <div class="persona-info">
+                        <h3>I'm a Provider</h3>
+                        <p>Supply hair products & partner with local salons</p>
+                    </div>
+                </button>
+                <button class="persona-btn" data-role="visitor">
+                    <div class="persona-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                        </svg>
+                    </div>
+                    <div class="persona-info">
+                        <h3>Just Visiting</h3>
+                        <p>Explore trending styles and AI hair technology</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#" class="logo">
+                <img src="assets/logo-icon.png" alt="Crown & Color" class="logo-icon">
                 <span class="logo-text">Crown & Color</span>
             </a>
             <ul class="nav-links">
@@ -286,21 +360,28 @@
         <div class="section-header">
             <span class="section-tag">Connect</span>
             <h2 class="section-title">Find Your Stylist</h2>
-            <p class="section-subtitle">Connect with talented hairdressers near you</p>
+            <p class="section-subtitle" id="stylist-subtitle">Connect with talented hairdressers near you</p>
         </div>
 
-        <div class="search-bar">
-            <input type="text" placeholder="Enter your location..." id="location-search">
-            <button class="search-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.35-4.35" />
-                </svg>
-            </button>
+        <div class="search-container-v2">
+            <div class="search-box">
+                <div class="search-input-group">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                    <input type="text" id="stylist-search"
+                        placeholder="Search by location (e.g., Harare) or specialty (e.g., Locs)...">
+                </div>
+                <div class="search-stats" id="search-stats">
+                    Showing all beauty experts
+                </div>
+            </div>
         </div>
 
         <div class="hairdresser-grid" id="hairdresser-grid">
-            <!-- Hairdresser cards populated by JS -->
+            <!-- Populated by JavaScript -->
         </div>
     </section>
 
@@ -309,9 +390,11 @@
         <div class="footer-content">
             <div class="footer-brand">
                 <a href="#" class="logo">
-                    <span class="logo-text">Crown & Color</span>
+                    <img src="assets/logo.png" alt="Crown & Color" style="height: 40px; width: auto;">
                 </a>
                 <p>Empowering you to visualize your perfect hairstyle before commitment.</p>
+                <button class="btn btn-primary nav-cta"
+                    style="margin-top: 1.5rem; width: fit-content; padding: 0.6rem 1.5rem;">Get Started</button>
             </div>
             <div class="footer-links">
                 <div class="footer-column">
@@ -345,6 +428,7 @@
         </div>
     </footer>
 
+    <script src="scripts/stylists-data.js"></script>
     <script src="scripts/gemini-ai.js"></script>
     <script src="scripts/main.js"></script>
 </body>
