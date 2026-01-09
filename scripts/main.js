@@ -134,6 +134,69 @@ let uploadedImage = null;
 let selectedStyle = null;
 let displayedItems = 6;
 let currentRole = localStorage.getItem('user_role') || null;
+let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+let currentQuickViewStyle = null;
+
+// ============================================
+// Favorites Functions
+// ============================================
+function isFavorite(styleId) {
+    return favorites.includes(styleId);
+}
+
+function toggleFavorite(styleId) {
+    if (isFavorite(styleId)) {
+        favorites = favorites.filter(id => id !== styleId);
+    } else {
+        favorites.push(styleId);
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    renderGallery(currentFilter);
+}
+
+// ============================================
+// Quick View Functions
+// ============================================
+function openQuickView(style) {
+    currentQuickViewStyle = style;
+    const modal = document.getElementById('quick-view-modal');
+    document.getElementById('quick-view-img').src = style.image;
+    document.getElementById('quick-view-title').textContent = style.name;
+    document.getElementById('quick-view-category').textContent = style.category.replace('-', ' ');
+    document.getElementById('quick-view-description').textContent =
+        `A beautiful ${style.length || 'versatile'} length ${style.category.replace('-', ' ')} style. ` +
+        (style.boho ? 'Features bohemian curly accents for a goddess look. ' : '') +
+        'Perfect for any occasion.';
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeQuickView() {
+    document.getElementById('quick-view-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    currentQuickViewStyle = null;
+}
+
+// Quick view event listeners
+document.getElementById('quick-view-close')?.addEventListener('click', closeQuickView);
+document.getElementById('quick-view-modal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'quick-view-modal') closeQuickView();
+});
+document.getElementById('quick-view-try')?.addEventListener('click', () => {
+    if (currentQuickViewStyle) {
+        closeQuickView();
+        selectStyleForTryOn(currentQuickViewStyle);
+    }
+});
+document.getElementById('quick-view-favorite')?.addEventListener('click', () => {
+    if (currentQuickViewStyle) {
+        toggleFavorite(currentQuickViewStyle.id);
+        const btn = document.getElementById('quick-view-favorite');
+        btn.innerHTML = isFavorite(currentQuickViewStyle.id) ?
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Saved' :
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Save';
+    }
+});
 
 // ============================================
 // Navigation
@@ -182,13 +245,18 @@ function createGalleryItem(style) {
     const trendingBadge = style.trending ? '<span class="trending-badge">Trending</span>' : '';
 
     item.innerHTML = `
-        <img src="${style.image}" alt="${style.name}" 
+        <img src="${style.image}" alt="${style.name}" loading="lazy"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
              style="width: 100%; height: 100%; object-fit: cover;">
         <div class="gallery-fallback" style="display: none; width: 100%; height: 100%; background: ${fallbackGradient}; align-items: center; justify-content: center; position: absolute; top: 0; left: 0;">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"/></svg>
         </div>
         ${trendingBadge}
+        <button class="gallery-favorite-btn" data-id="${style.id}" onclick="event.stopPropagation(); toggleFavorite(${style.id})">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="${isFavorite(style.id) ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            </svg>
+        </button>
         <div class="gallery-item-overlay">
             <h4 class="gallery-item-title">${style.name}</h4>
             <span class="gallery-item-category">${style.category.replace('-', ' ')}</span>
@@ -196,7 +264,7 @@ function createGalleryItem(style) {
     `;
 
     item.addEventListener('click', () => {
-        selectStyleForTryOn(style);
+        openQuickView(style);
     });
 
     return item;
