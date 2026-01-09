@@ -354,8 +354,30 @@
                     <h3>Upload Your Photo</h3>
                     <p>Drag & drop or click to upload</p>
                     <span class="upload-hint">PNG, JPG up to 10MB</span>
+                    <div class="upload-options" style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-secondary" onclick="document.getElementById('photo-upload').click()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" />
+                                <circle cx="8.5" cy="8.5" r="1.5" />
+                                <path d="m21 15-5-5L5 21" />
+                            </svg>
+                            Upload Photo
+                        </button>
+                        <button class="btn btn-primary" id="camera-btn" onclick="startCamera()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                                <circle cx="12" cy="13" r="4" />
+                            </svg>
+                            Take Selfie
+                        </button>
+                    </div>
                 </div>
                 <input type="file" id="photo-upload" accept="image/*" hidden>
+                <video id="camera-stream" style="display: none; width: 100%; border-radius: 12px;"></video>
+                <canvas id="camera-canvas" style="display: none;"></canvas>
             </div>
 
             <div id="ai-analysis-result" class="ai-analysis-result"
