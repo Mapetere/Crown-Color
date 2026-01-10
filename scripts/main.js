@@ -647,6 +647,7 @@ function setRole(role) {
     setTimeout(() => {
         onboardingModal.style.display = 'none';
         applyPersonaCustomization(role);
+        updateRoleLabel();
     }, 500);
 }
 
@@ -654,22 +655,183 @@ function applyPersonaCustomization(role) {
     const heroTitle = document.querySelector('.hero-title');
     const heroSubtitle = document.querySelector('.hero-subtitle');
     const stylistSubtitle = document.getElementById('stylist-subtitle');
+    const heroButtons = document.querySelector('.hero-buttons');
+    const heroStats = document.querySelectorAll('.stat');
+    const hairdresserSection = document.getElementById('hairdressers');
+    const sectionHeader = hairdresserSection?.querySelector('.section-header');
+    const navLinks = document.querySelector('.nav-links');
+    const mobileMenuLinks = document.querySelector('.mobile-menu-links');
 
-    switch (role) {
-        case 'stylist':
-            if (heroTitle) heroTitle.innerHTML = '<span class="title-line">Grow Your</span><span class="title-line accent">Artistry</span>';
-            if (heroSubtitle) heroSubtitle.innerText = 'Showcase your portfolio to thousands of clients looking for their next look.';
-            if (stylistSubtitle) stylistSubtitle.innerText = 'Join our elite network of beauty professionals.';
-            break;
-        case 'provider':
-            if (heroTitle) heroTitle.innerHTML = '<span class="title-line">Scale Your</span><span class="title-line accent">Supply</span>';
-            if (heroSubtitle) heroSubtitle.innerText = 'Connect with top salons and stylists needing high-quality hair products.';
-            break;
-        case 'client':
-        default:
-            // Standard client experience already in HTML
-            break;
+    // Reset any previous persona-specific additions
+    document.querySelectorAll('.persona-specific').forEach(el => el.remove());
+
+    // Persona configurations
+    const personaConfig = {
+        client: {
+            heroTitle: '<span class="title-line">Discover Your</span><span class="title-line accent">Perfect Style</span>',
+            heroSubtitle: 'Visualize stunning hairstyles and braid colors before your next appointment. AI-powered try-ons that match your unique beauty.',
+            primaryCTA: { text: 'Try Your Look', href: '#try-on', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>' },
+            secondaryCTA: { text: 'Find a Stylist', href: '#hairdressers' },
+            stats: [
+                { number: '500+', label: 'Hairstyles' },
+                { number: '200+', label: 'Braid Colors' },
+                { number: '50+', label: 'Partner Stylists' }
+            ],
+            stylistSectionTitle: 'Find Your Stylist',
+            stylistSectionSubtitle: 'Connect with talented hairdressers near you',
+            welcomeMessage: 'Welcome, Beautiful! Let\'s find your perfect style.'
+        },
+        stylist: {
+            heroTitle: '<span class="title-line">Grow Your</span><span class="title-line accent">Artistry</span>',
+            heroSubtitle: 'Showcase your portfolio to thousands of clients looking for their next look. Join our elite network of beauty professionals.',
+            primaryCTA: { text: 'Join Our Network', href: '#hairdressers', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>' },
+            secondaryCTA: { text: 'Explore Styles', href: '#gallery' },
+            stats: [
+                { number: '10K+', label: 'Monthly Clients' },
+                { number: '22+', label: 'Partner Stylists' },
+                { number: '95%', label: 'Booking Rate' }
+            ],
+            stylistSectionTitle: 'Join Our Network',
+            stylistSectionSubtitle: 'Showcase your work and connect with clients seeking your expertise',
+            welcomeMessage: 'Welcome, Artist! Ready to grow your clientele?'
+        },
+        provider: {
+            heroTitle: '<span class="title-line">Scale Your</span><span class="title-line accent">Supply</span>',
+            heroSubtitle: 'Connect with top salons and stylists needing high-quality hair products. Partner with Africa\'s growing beauty network.',
+            primaryCTA: { text: 'Partner With Us', href: '#hairdressers', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>' },
+            secondaryCTA: { text: 'View Network', href: '#hairdressers' },
+            stats: [
+                { number: '50+', label: 'Partner Salons' },
+                { number: '5', label: 'Countries' },
+                { number: '1M+', label: 'Products Sold' }
+            ],
+            stylistSectionTitle: 'Salon Network',
+            stylistSectionSubtitle: 'Connect with our partner salons and stylists for wholesale opportunities',
+            welcomeMessage: 'Welcome, Partner! Let\'s expand your reach.'
+        },
+        visitor: {
+            heroTitle: '<span class="title-line">Welcome to</span><span class="title-line accent">Crown & Color</span>',
+            heroSubtitle: 'Explore AI-powered hairstyle visualization technology. Discover trending styles and see how they\'d look on you.',
+            primaryCTA: { text: 'Explore Styles', href: '#gallery', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>' },
+            secondaryCTA: { text: 'Try AI Magic', href: '#try-on' },
+            stats: [
+                { number: '500+', label: 'Hairstyles' },
+                { number: 'AI', label: 'Powered' },
+                { number: 'Free', label: 'To Try' }
+            ],
+            stylistSectionTitle: 'Meet Our Stylists',
+            stylistSectionSubtitle: 'Discover talented beauty experts in our growing network',
+            welcomeMessage: 'Welcome to Crown & Color! Let\'s explore together.'
+        }
+    };
+
+    const config = personaConfig[role] || personaConfig.client;
+
+    // Apply hero customization
+    if (heroTitle) heroTitle.innerHTML = config.heroTitle;
+    if (heroSubtitle) heroSubtitle.innerText = config.heroSubtitle;
+
+    // Apply CTA customization
+    if (heroButtons) {
+        heroButtons.innerHTML = `
+            <a href="${config.primaryCTA.href}" class="btn btn-primary">
+                <span>${config.primaryCTA.text}</span>
+                ${config.primaryCTA.icon}
+            </a>
+            <a href="${config.secondaryCTA.href}" class="btn btn-secondary">${config.secondaryCTA.text}</a>
+        `;
     }
+
+    // Apply stats customization
+    if (heroStats.length >= 3) {
+        config.stats.forEach((stat, index) => {
+            if (heroStats[index]) {
+                heroStats[index].querySelector('.stat-number').innerText = stat.number;
+                heroStats[index].querySelector('.stat-label').innerText = stat.label;
+            }
+        });
+    }
+
+    // Customize hairdresser section header
+    if (sectionHeader) {
+        const title = sectionHeader.querySelector('.section-title');
+        const subtitle = sectionHeader.querySelector('.section-subtitle');
+        if (title) title.innerText = config.stylistSectionTitle;
+        if (subtitle) subtitle.innerText = config.stylistSectionSubtitle;
+    }
+
+    // Add role-specific content to hairdresser section
+    if (hairdresserSection && (role === 'stylist' || role === 'provider')) {
+        const joinBanner = document.createElement('div');
+        joinBanner.className = 'persona-specific join-network-banner';
+        joinBanner.innerHTML = role === 'stylist' ? `
+            <div class="join-banner-content">
+                <h3>Ready to Showcase Your Work?</h3>
+                <p>Join 22+ talented stylists in our network. Get discovered by clients looking for your expertise.</p>
+                <a href="mailto:stylists@crowncolor.co.zw?subject=Stylist%20Application" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Apply to Join
+                </a>
+            </div>
+        ` : `
+            <div class="join-banner-content">
+                <h3>Become a Partner Supplier</h3>
+                <p>Supply quality hair products to our network of 50+ salons across Africa.</p>
+                <a href="mailto:partners@crowncolor.co.zw?subject=Partnership%20Inquiry" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                    Partner With Us
+                </a>
+            </div>
+        `;
+        sectionHeader.after(joinBanner);
+    }
+
+    // Show welcome toast
+    showWelcomeToast(config.welcomeMessage, role);
+}
+
+// Welcome toast notification
+function showWelcomeToast(message, role) {
+    // Remove any existing toast
+    document.querySelector('.welcome-toast')?.remove();
+
+    const roleIcons = {
+        client: '👑',
+        stylist: '✂️',
+        provider: '📦',
+        visitor: '✨'
+    };
+
+    const toast = document.createElement('div');
+    toast.className = 'welcome-toast persona-specific';
+    toast.innerHTML = `
+        <span class="toast-icon">${roleIcons[role] || '✨'}</span>
+        <span class="toast-message">${message}</span>
+        <button class="toast-close" onclick="this.parentElement.remove()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+    `;
+    document.body.appendChild(toast);
+
+    // Auto-dismiss after 5 seconds
+    setTimeout(() => toast.classList.add('toast-hidden'), 4500);
+    setTimeout(() => toast.remove(), 5000);
+}
+
+// Update role label in footer
+function updateRoleLabel() {
+    const roleLabel = document.getElementById('current-role-label');
+    if (!roleLabel) return;
+
+    const roleNames = {
+        client: 'Client',
+        stylist: 'Stylist',
+        provider: 'Provider',
+        visitor: 'Visitor'
+    };
+
+    const storedRole = localStorage.getItem('user_role');
+    roleLabel.textContent = storedRole ? `Browsing as ${roleNames[storedRole] || 'Guest'}` : 'Change Role';
 }
 
 // ============================================
@@ -701,6 +863,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Role switcher in footer
+    const roleSwitcher = document.getElementById('role-switcher');
+    if (roleSwitcher) {
+        roleSwitcher.addEventListener('click', () => {
+            onboardingModal.style.display = 'flex';
+            onboardingModal.style.opacity = '1';
+            // Scroll to top for better onboarding experience
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // Update role label on load
+    updateRoleLabel();
 
     // Add intersection observer for scroll animations
     const observerOptions = {
@@ -761,7 +937,7 @@ let cameraStream = null;
 function startCamera() {
     const video = document.getElementById('camera-stream');
     const uploadContent = document.querySelector('.upload-content');
-    
+
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
             .then(stream => {
@@ -770,7 +946,7 @@ function startCamera() {
                 video.style.display = 'block';
                 video.play();
                 uploadContent.style.display = 'none';
-                
+
                 // Add capture button
                 const captureBtn = document.createElement('button');
                 captureBtn.className = 'btn btn-primary';
@@ -795,14 +971,14 @@ function capturePhoto() {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     canvas.getContext('2d').drawImage(video, 0, 0);
-    
+
     // Stop camera
     if (cameraStream) {
         cameraStream.getTracks().forEach(track => track.stop());
     }
     video.style.display = 'none';
     document.getElementById('capture-btn')?.remove();
-    
+
     // Use captured image
     const imageData = canvas.toDataURL('image/jpeg');
     handleImageUpload(dataURLtoFile(imageData, 'selfie.jpg'));
@@ -814,8 +990,8 @@ function dataURLtoFile(dataurl, filename) {
     const bstr = atob(arr[1]);
     let n = bstr.length;
     const u8arr = new Uint8Array(n);
-    while(n--) u8arr[n] = bstr.charCodeAt(n);
-    return new File([u8arr], filename, {type: mime});
+    while (n--) u8arr[n] = bstr.charCodeAt(n);
+    return new File([u8arr], filename, { type: mime });
 }
 
 // ============================================

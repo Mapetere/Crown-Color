@@ -2613,3 +2613,189 @@ section {
         transform: scale(1);
     }
 }
+
+/* ============================================
+   Persona-Specific Styles
+   ============================================ */
+
+/* Welcome Toast Notification */
+.welcome-toast {
+    position: fixed;
+    bottom: var(--space-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-xl);
+    background: rgba(17, 17, 17, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--gold-500);
+    border-radius: var(--radius-full);
+    box-shadow: 0 10px 40px rgba(245, 158, 11, 0.2);
+    z-index: 10000;
+    animation: toastSlideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.welcome-toast.toast-hidden {
+    animation: toastSlideDown 0.3s ease forwards;
+}
+
+@keyframes toastSlideUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes toastSlideDown {
+    from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(100%);
+    }
+}
+
+.toast-icon {
+    font-size: 1.5rem;
+}
+
+.toast-message {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.toast-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: var(--space-sm);
+}
+
+.toast-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+/* Join Network Banner (Stylists & Providers) */
+.join-network-banner {
+    max-width: 800px;
+    margin: 0 auto var(--space-2xl);
+    padding: var(--space-2xl);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: var(--radius-2xl);
+    text-align: center;
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.join-banner-content h3 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.join-banner-content p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.join-banner-content .btn {
+    display: inline-flex;
+    gap: var(--space-sm);
+}
+
+/* Role Switcher in Footer */
+.role-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-glass);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: var(--space-md);
+}
+
+.role-switcher:hover {
+    background: var(--bg-glass-hover);
+    border-color: var(--gold-400);
+    color: var(--gold-400);
+}
+
+.role-switcher svg {
+    transition: transform 0.3s;
+}
+
+.role-switcher:hover svg {
+    transform: rotate(180deg);
+}
+
+/* Mobile responsive for toast */
+@media (max-width: 640px) {
+    .welcome-toast {
+        width: calc(100% - 2rem);
+        left: var(--space-md);
+        right: var(--space-md);
+        transform: none;
+        bottom: var(--space-md);
+    }
+
+    .welcome-toast.toast-hidden {
+        animation: toastSlideDownMobile 0.3s ease forwards;
+    }
+
+    @keyframes toastSlideDownMobile {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        to {
+            opacity: 0;
+            transform: translateY(100%);
+        }
+    }
+
+    .join-network-banner {
+        padding: var(--space-lg);
+        margin: 0 var(--space-md) var(--space-xl);
+    }
+}
